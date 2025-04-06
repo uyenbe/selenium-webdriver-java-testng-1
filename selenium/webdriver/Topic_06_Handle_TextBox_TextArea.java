@@ -15,7 +15,13 @@ public class Topic_06_Handle_TextBox_TextArea {
     WebDriver driver;
     String projectPath = System.getProperty("user.dir");
     String osName = System.getProperty("os.name");
-
+// Đối với textbox thường sẽ check các TH như sau:
+    //1. Clear data
+    //2. Sendkey
+    //3. Verify data. Dữ liệu cần verify ở đâu thì dùng hàm get ở đấy. Ví dụ
+    // 3.1 Dữ liệu cần verify nằm ở attribute >> dùng hàm getAttribute()
+    //3.2 Dữ liệu cần verify nằm ở ngoài attribute >> thường dùng getText()
+    //3.3 Dữ liệu không nằm ở trong và ngoài attribute >> thầy chưa dạy đến
     @BeforeClass
     public void beforeClass() {
         if (osName.contains("Windows")) {
@@ -179,12 +185,6 @@ public class Topic_06_Handle_TextBox_TextArea {
         assertion.assertEquals(driver.findElement(By.xpath("//input[@id='firstname']")).getAttribute("value"),firstname);
         assertion.assertEquals(driver.findElement(By.xpath("//input[@id='lastname']")).getAttribute("value"),lastname);
         assertion.assertEquals(driver.findElement(By.xpath("//input[@id='email']")).getAttribute("value"),emailaddress);
-
-
-
-
-
-
 
     }
 

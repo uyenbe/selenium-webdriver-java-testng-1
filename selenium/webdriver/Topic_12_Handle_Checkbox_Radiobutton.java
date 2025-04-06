@@ -5,6 +5,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.WheelInput;
 import org.openqa.selenium.support.Color;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -162,11 +165,101 @@ public class Topic_12_Handle_Checkbox_Radiobutton {
     }
 
     @Test
-    public void TC_04_Custom_RadioButton(){
-        driver.get("");
-        
+    public void TC_04_Custom_Checkbox_RadioButton(){
+        driver.get("https://login.ubuntu.com/");
+        // Case 1: dùng thẻ input để click >> thẻ input bị che nên ko click được >> FALSE
+
+        //Case 2: dùng thẻ div/ 1 thẻ bên ngoài để click >> PASS
+        // Dùng thẻ được click để verify >> FALSE bởi vì isSelected chỉ dùng cho thẻ input thôi
+
+        //Case 3: dùng thẻ div/ thẻ bên ngoài để click >> PASS
+        // DÙng thẻ input để verify với isSelected >> PASS
+        // Nhưng chưa tối ưu, vì phải xách định 2 locator khác nhau cho 1 element >> sau này khi mantain sẽ mất nhiều time hơn
+        //        By radioButton = By.xpath("//label[@class='new-user']");
+        //        Assertion assertion = new Assertion();
+        //        if (!driver.findElement(radioButton).isSelected())
+        //        {
+        //            driver.findElement(radioButton).click();
+        //            sleepInSeconds(1);
+        //        }
+        //        assertion.assertTrue(driver.findElement(By.xpath("//label[@class='new-user']/preceding-sibling::input")).isSelected());
+        //
+        //        By checkBox = By.xpath("//div[contains(@class, 'accept-tos-input')]");
+        //        if (!driver.findElement(checkBox).isSelected()){
+        //            driver.findElement(checkBox).click();
+        //        }
+        //        assertion.assertFalse(driver.findElement(By.xpath("//div[contains(@class, 'accept-tos-input')]//input[@type='checkbox']")).isSelected());
+        //Case 4: Dùng thẻ input để click, nhưng vì thẻ input đang bị ẩn >> dùng click của webElement nó sẽ không dùng được
+        // Dùng JavascripExecutor (JS) để click >> chỉ cần xác định 1 locator cho element thôi
+        // Dùng thẻ input để verify >> assertion với isSelected như bình thường
+        // driver: kiểu interface webdriver
+        // JavascriptExecutor: interface javascrip executor
+        // >> Ép kiểu interface này sang kiểu interfae khác
+
+        // Cách 1: Không khai báo biến mà ép kiểu driver xong gọi hàm luôn
+       // ((JavascriptExecutor)driver).executeAsyncScript("");
+
+        // Cách 2: Khai báo biến
+
+        By radioButton = By.xpath("//label[@class='new-user']/preceding-sibling::input");
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+
+        //Trong đó: arguments [0]: là tham số truyền vào, ở đây chính là cái element dùng để click, và truyền từ vị trí số 0
+        // element dùng để click >> được define ở sau dấu ,
+
+        Assertion assertion = new Assertion();
+        if (!driver.findElement(radioButton).isSelected())
+        {
+            js.executeScript("arguments[0].click();",driver.findElement(radioButton));
+            sleepInSeconds(1);
+        }
+        assertion.assertTrue(driver.findElement(radioButton).isSelected());
+
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(By.xpath("//span[text()='Create account']")));
+        actions.perform();
+
+        By checkBox = By.xpath("//label[@for='id_accept_tos']/preceding-sibling::input");
+
+        if (!driver.findElement(checkBox).isSelected()){
+            js.executeScript("arguments[0].click();",driver.findElement(checkBox));
+            sleepInSeconds(1);
+        }
+        assertion.assertTrue(driver.findElement(checkBox).isSelected());
 
     }
+
+    @Test
+    public void TC_05_Custom_RadioButton() {
+        driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+        By radioCanTho = By.xpath("//div[@aria-label='Cần Thơ']");
+        By checkboxQuangNam = By.xpath("//div[@aria-label='Quảng Nam']");
+
+        //verify radio chưa selected
+        Assertion assertion = new Assertion();
+        // Verify radio chưa click
+        // Cách 1
+        assertion.assertEquals(driver.findElement(radioCanTho).getAttribute("aria-checked"), "false");
+        assertion.assertEquals(driver.findElement(checkboxQuangNam).getAttribute("aria-checked"), "false");
+
+        // Cách 2: thêm luôn attribute vào xpath, dùng isDisplayed để verify
+        assertion.assertTrue(driver.findElement(By.xpath("//div[@aria-label='Cần Thơ' and @aria-checked = 'false']")).isDisplayed());
+
+        driver.findElement(radioCanTho).click();
+        driver.findElement(checkboxQuangNam).click();
+
+        //Verify radio sau khi click
+        assertion.assertEquals(driver.findElement(radioCanTho).getAttribute("aria-checked"), "true");
+        assertion.assertTrue(driver.findElement(By.xpath("//div[@aria-label='Cần Thơ' and @aria-checked = 'true']")).isDisplayed());
+
+        assertion.assertEquals(driver.findElement(checkboxQuangNam).getAttribute("aria-checked"), "true");
+    }
+
+
+
+
+
+
 
     @AfterClass
     public void afterClass() {

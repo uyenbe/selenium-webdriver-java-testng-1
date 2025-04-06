@@ -1,7 +1,7 @@
 package webdriver;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -21,7 +21,7 @@ public class Topic_00_Template {
             System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
         }
 
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
@@ -42,5 +42,13 @@ public class Topic_00_Template {
     @AfterClass
     public void afterClass() {
         // driver.quit();
+    }
+    public void sleepInSeconds(long timeInSecond) {
+        try {
+            Thread.sleep(timeInSecond * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

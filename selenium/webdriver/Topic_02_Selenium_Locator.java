@@ -27,7 +27,7 @@ public class Topic_02_Selenium_Locator {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         //Mở trang web ra
-        driver.get("https://demo.nopcommerce.com/register");
+
 
         /*
         FirstName textbox - HTML code
@@ -42,6 +42,7 @@ public class Topic_02_Selenium_Locator {
     }
     @Test
     public void TC_01_ID() {
+        driver.get("https://demo.nopcommerce.com/register");
         // tìm element có id = FirstName
         driver.findElement(By.id("FirstName"));
 
@@ -110,7 +111,11 @@ public class Topic_02_Selenium_Locator {
         //Các XPath Technical:
         //1. Dựa vào cú pháp của XPath tương đối: //tagname[@attribute='value']
         driver.findElement(By.xpath("//input[@id='FirstName']"));
-        //2. Parent node (lấy từ cấp cha >> con): //parent-tagname[@attribute='value']//child-tagname[@attribute='value']
+        //2. Parent node (lấy từ cấp cha >> con): Lấy từ cấp cha để tìm ra element là duy nhất( tìm được 1 matching node)
+        // Dùng parent node trong TH:
+        //- Khi 1 element không thể xác định được nó là duy nhất bới các atrribute và value của nó
+        //- Khi một element không có attribute nào hết
+        // parent-tagname[@attribute='value']//child-tagname[@attribute='value']
         driver.findElement(By.xpath("//div[@class='form-fields']//input[@id='FirstName']"));
         //3+4. Có 2 cách lấy Xpath:
         // 3.1. Lấy tuyệt đối: text()= /string()=/ @attribute=
@@ -189,13 +194,43 @@ public class Topic_02_Selenium_Locator {
         //Position() dùng tương tự như Inside parent
         driver.findElement(By.xpath(""));
         //last() dùng để lấy element ở vị trí cuối cùng mà không quan tâm toàn bộ có bao nhiêu element
-        driver.findElement(By.xpath("//li[last()]"));
+        driver.findElement(By.xpath("//li[@class='ui-state-default ui-selectee'][last()]"));
+        //8 AXES
+        // - Luôn nhớ mình đang đứng ở node nào để xét tiếp
+        // - Lấy cái cố định (key word) để tìm cái không cố định (thường là lấy title)
+        //=>> Dùng theo cách này thì dù có thay đổi vị trí của element cũng vẫn lấy được
+        // Các key words:
+        //1. ancentor: node tổ tiên
+        //2. parent: node cha (đi từ node con)
+        //3. preceding: node bác
+        //4. following: node chú
+        //5. preceding-sibling: node anh
+        //6. following-sibling: node em
+        //7.child: node con
+        //8. descendant: node cháu chắt
+        //Demo: Lấy ra ngày xuất bản của 1 quyển sách bất kỳ:
+        // Lấy cái cố định : Tên sách để tìm cái không cố định: Ngày xuất bản/Giá/Số trang...
+        // link:https://subscription.packtpub.com/search?query=java&_gl=1*122wvo2*_ga*MTAzMzc1MDU3NC4xNzAzMDQ1NTQ3*_ga_Q4R8G7SJDK*MTcwMzA0NTU0Ni4xLjEuMTcwMzA0NjIxNy43LjAuMA..
+        // div[text()='Java Programming for Complete Beginners']/ancestor::a/following-sibling::a/div[@class='product-footer']/div[1]
+        //9. CSS -- Chưa hiểu gì cả
+        //10. Tips and Tricks
+        //10.1 Elememt Tab >> Nơi tìm kiếm các element: string/XPath/Css
+        //10.2 Console Tab: Mục đích dể verify lại các giá trị + viết các đoạn code javascript + lấy các properties (thuộc tính) của element
+        // Cú pháp: XPath: $x("XPath")
+        // Css: $$("Css")
+        //jquery: $("Css")
+        //10.3 Chrome - Console Tab: để get các giá trị trong textbox/text area/ editable dropdown...
+        // Lấy ra 1 giá trị vừa nhập mà chưa sent request lên server =>> Test tính năng Clear Form
+        // Verify lại giá trị
+        // Verify lại giá trị mà element bị ẩn/ che khuất
+
+
 
 
         // Note: nếu dùng 1 / thì chỉ tìm đến 1 node con sau node cha.
         // Nếu dùng 2 // thì tìm được bất kỳ node nào dưới node cha.
         // Hàm của XPath: tên hàm + (). VD: text(), string(), last(), contains(), starts-with()...
-        // Attribute đi với @
+        // Attribute đi với aaaaaaaa
         //XPath không support với hàm ends-with()
         //Css vẫn support $=
         // Sử dụng parent node trong TH:
@@ -203,6 +238,7 @@ public class Topic_02_Selenium_Locator {
         // 2. TH tìm thấy > 1 matching node.
         // 3. Tagname không có các attribute như: id/class/name
         //Handle text trong XPath: thì chỉ lấy text của thẻ đó, không lấy text của thẻ con
+        //Css không support tìm Ancestor hay Preceding được vì nó không đi ngược lên để tìm được.
 
 
     }

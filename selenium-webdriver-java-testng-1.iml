@@ -7,6 +7,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="selenium-server-4.15.0" level="project" />
+    <orderEntry type="library" name="libraries2" level="project" />
+    <orderEntry type="library" name="libraries1" level="project" />
+    <orderEntry type="library" name="libraries" level="project" />
+    <orderEntry type="library" exported="" name="selenium-server-4.15.0" level="project" />
+    <orderEntry type="library" name="selenium-3.141.59-nodeps-sources" level="project" />
+    <orderEntry type="library" name="selenium-3.141.59-nodeps-sources (2)" level="project" />
+    <orderEntry type="library" name="selenium-chrome-driver-4.15.0-sources" level="project" />
+    <orderEntry type="library" name="client-combined-3.141.59-sources" level="project" />
+    <orderEntry type="library" name="selenium-devtools-v86-4.0.0-alpha-7" level="project" />
+    <orderEntry type="library" name="selenium-server-4.15.0 (2)" level="project" />
+    <orderEntry type="library" name="testng-7.8.0" level="project" />
   </component>
 </module>

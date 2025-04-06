@@ -16,9 +16,14 @@ import java.util.concurrent.TimeUnit;
 
 public class Topic_13_Handle_Alert {
     WebDriver driver;
+
     WebDriverWait explicitWait;
     String projectPath = System.getProperty("user.dir");
     String osName = System.getProperty("os.name");
+
+    // Define username, pass dùng chung cho các TCs
+    String username = "admin";
+    String password = "admin";
 
     // Define 1 biến resultText dùng chung cho cả 3 TCs bên dưới
     By resultText = By.xpath("//p[@id='result']");
@@ -125,20 +130,28 @@ public class Topic_13_Handle_Alert {
         // Dùng DevTool Protocol (CDP) trên Chrome/ Edge vì dùng (Chromium): giả lập lại những thứ mình test trên devtool
 
         // Cách 1: Truyền trực tiếp username/pass vào url theo cú pháp:
+        // http/https:// + username + : + password + @ URL
         driver.get("http://admin:admin@the-internet.herokuapp.com/basic_auth");
 
         Assertion assertion = new Assertion();
         assertion.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
 
-        
+    }
+    @Test
+    public void TC_05_Authentication_Navigate_alert() {
+        driver.get("http://the-internet.herokuapp.com/");
+        String basicAuth = driver.findElement(By.xpath("//a[text()='Basic Auth']")).getAttribute("href");
+        driver.get(getAuthenticationUrl(basicAuth, username, password));
+        Assertion assertion = new Assertion();
+        assertion.assertEquals(driver.findElement(
+                By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).getText(),
+                "Congratulations! You must have the proper credentials.");
+    }
 
-
-
-
-
-
-
-
+    public String getAuthenticationUrl(String link, String username, String password) {
+        String[] linkArray = link.split("//");
+        link = linkArray[0] + "//" + username + ":" + password + "@" + linkArray[1];
+        return link;
     }
 
     @AfterClass

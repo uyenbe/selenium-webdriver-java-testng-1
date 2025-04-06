@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 
-import java.lang.ref.SoftReference;
 import java.util.concurrent.TimeUnit;
 
 public class Topic_03_Selenium_WebDriver_API_Bai_Tap {
