@@ -158,7 +158,7 @@ public class Topic_06_Handle_TextBox_TextArea {
         sleepInSeconds(5);
         // Verify xem sau khi logOut hệ thống
         String HomeUrl = driver.getCurrentUrl();
-        assertion.assertEquals(HomeUrl,"http://live.techpanda.org/index.php/");
+        assertion.assertEquals(HomeUrl,"https://live.techpanda.org/index.php/");
 
         //2. Login
         driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();

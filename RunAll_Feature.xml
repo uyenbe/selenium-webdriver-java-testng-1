@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Live Guru - All">
+<!-- Run multiple suite -->
+  <suite-files>
+      <suite-file path="RunPayment_Feature.xml"/>
+      <suite-file path="RunProduct_Feature.xml"/>
+  </suite-files>
+
+</suite>

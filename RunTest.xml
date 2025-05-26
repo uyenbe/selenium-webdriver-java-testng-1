@@ -1,0 +1,69 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Live Guru" > <!--verbose="1" parallel="tests" thread-count="3"> -->
+    <!-- parallel sẽ chạy song song các test/classes/method được truyền vào
+    TH truyền :
+    - None : không chạy
+    - test: 3 <test> chạy cùng lúc
+    - classes: Chạy song song các class, TH có nhiều class:
+    > chạy song song tất cả các class của test đầu tiên trước, sau đó mới đến chạy song song các class của các test khác
+    - method: chạy song song nhiều method, sau đó chạy ra ngoài classes rồi ra ngoài test
+    >> Phù hợp nhất để chạy Parallel là test
+    -
+    -->
+
+    <!-- <test name="Demo">
+        <parameter name="server" value="Dev"/>
+        <groups>
+            <run>
+                <include name="payment"></include>
+            </run>
+        </groups>
+        <packages>
+            <package name="payment"></package>
+            <package name="product"></package>
+            <package name="testNG"></package>
+
+        </packages>
+
+    </test> -->
+    <listeners>
+        <listener class-name="Listener.ScreenShotListener"/>
+    </listeners>
+    <parameter name="server" value="Production"/>
+   <test name="Run on Chrome" preserve-order="true">
+       <!-- khi set preserve-order = true >> chạy theo thứ tự trong package
+       khi set preserve-order = false >> chạy theo thứ tự khai báo/ liệt kê trong class -->
+      <parameter name="browser" value="Chrome"/>
+<!--       <packages>-->
+<!--           <package name="payment"/>-->
+<!--           <package name="testNG"/>-->
+<!--           <package name="product"/>-->
+<!--       </packages>-->
+<!--       <classes> -->
+    <!-- Run theo từng class cũng được nhưng hơi lâu vì phải liệt kê ra nhiều class
+    nên để run nhiều class mà đỡ tốn time >> Run theo Package -->
+<!--           <class name="testNG.Topic_09_Multiple_Browser"/>-->
+<!--           <class name="testNG.Topic_01_Annotation"/>-->
+<!--       </classes>-->
+       <classes>
+           <class name="testNG.Topic_13_Listener"/>
+       </classes>
+   </test>
+<!--
+    <test name="Run on Firefox">
+        <parameter name="browser" value="Firefox"/>
+        <classes>
+            <class name="testNG.Topic_09_Multiple_Browser"/>
+        </classes>
+    </test>
+
+    <test name="Run on Edge">
+        <parameter name="browser" value="Edge"/>
+        <classes>
+            <class name="testNG.Topic_09_Multiple_Browser"/>
+        </classes>
+    </test>
+    -->
+
+</suite>

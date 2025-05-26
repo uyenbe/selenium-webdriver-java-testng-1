@@ -18,5 +18,7 @@
     <orderEntry type="library" name="selenium-devtools-v86-4.0.0-alpha-7" level="project" />
     <orderEntry type="library" name="selenium-server-4.15.0 (2)" level="project" />
     <orderEntry type="library" name="testng-7.8.0" level="project" />
+    <orderEntry type="library" name="commons-io-2.19.0" level="project" />
+    <orderEntry type="library" name="selenium-server-4.31.0" level="project" />
   </component>
 </module>
